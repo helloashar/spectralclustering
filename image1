@@ -1,0 +1,33 @@
+import numpy as np
+from sklearn.cluster import SpectralClustering
+from skimage import io, color
+import matplotlib.pyplot as plt
+
+# Step 1: Load Image
+image = io.imread('./sample_data/d1.jpg')
+# Assuming it's an RGB image, convert it to grayscale
+gray_image = color.rgb2gray(image)
+data = gray_image.reshape((-1, 1))  # Reshape to a column vector
+
+# Step 2: Construct Affinity Matrix
+# (Implementation depends on the specific choice of affinity measure)
+
+# Step 3-7: Spectral Clustering
+spectral = SpectralClustering(n_clusters=3, affinity='nearest_neighbors', random_state=42)
+labels = spectral.fit_predict(data)
+
+# Step 8: Visualize Segmentation
+segmented_image = labels.reshape(image.shape[:-1])  # Reshape back to image dimensions
+
+# Display original and segmented images
+plt.figure(figsize=(10, 5))
+
+plt.subplot(1, 2, 1)
+plt.imshow(gray_image, cmap='gray')
+plt.title('Original Image')
+
+plt.subplot(1, 2, 2)
+plt.imshow(segmented_image, cmap='viridis')
+plt.title('Segmented Image')
+
+plt.show()
