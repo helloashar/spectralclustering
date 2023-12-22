@@ -1,0 +1,22 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.datasets import make_blobs
+from sklearn.cluster import SpectralClustering
+
+# Generate synthetic data
+np.random.seed(42)
+X, y = make_blobs(n_samples=1000, centers=4, cluster_std=1.0, random_state=42)
+
+# Visualize the synthetic data
+plt.scatter(X[:, 0], X[:, 1], c=y, cmap='viridis', edgecolors='k', s=20)
+plt.title("Generated Data")
+plt.show()
+
+# Apply Spectral Clustering
+spectral = SpectralClustering(n_clusters=4, affinity='nearest_neighbors', random_state=42)
+y_pred = spectral.fit_predict(X)
+
+# Visualize the clustering result
+plt.scatter(X[:, 0], X[:, 1], c=y_pred, cmap='viridis', edgecolors='k', s=20)
+plt.title("Spectral Clustering Result")
+plt.show()
